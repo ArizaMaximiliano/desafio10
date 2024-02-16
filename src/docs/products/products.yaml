@@ -1,0 +1,93 @@
+openapi: 3.0.0
+info:
+  title: Documentacion de productos
+  version: 1.0.0
+
+paths:
+  /api/products:
+    get:
+      summary: Obtiene todos los productos
+      tags:
+        - Productos
+      responses:
+        200:
+          description: Productos obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        500:
+          description: Error interno del servidor
+
+  /api/products/{pid}:
+    get:
+      summary: Obtiene un producto por su ID
+      tags:
+        - Productos
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+      responses:
+        200:
+          description: Producto obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        404:
+          description: Producto no encontrado
+        500:
+          description: Error interno del servidor
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID del producto
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Descripcion del producto
+        code:
+          type: string
+          description: Codigo del producto
+        price:
+          type: number
+          description: Precio del producto
+        status:
+          type: string
+          description: Estado del producto
+        stock:
+          type: number
+          description: Stock disponible del producto
+        category:
+          type: string
+          description: Categoria del producto
+        thumbnail:
+          type: string
+          description: URL de la imagen del producto
+        availability:
+          type: boolean
+          description: Disponibilidad del producto
+      example:
+        _id: 655d00990175ea17b8e90305
+        title: Titulo del producto
+        description: Descripcion del producto
+        code: ABC123
+        price: 20
+        status: Disponible
+        stock: 50
+        category: Categoria
+        thumbnail: http://example.com/product.jpg
+        availability: true
